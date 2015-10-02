@@ -18,6 +18,8 @@ public class MenuController : MonoBehaviour
 
     public static bool inMenu;
 
+    public string finalQuitURL;
+
     void Start()
     {
         Cursor.visible = true;
@@ -101,7 +103,18 @@ public class MenuController : MonoBehaviour
     }
     public void QuitGame()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
+		if (finalQuitURL != ""){
+			Application.OpenURL(finalQuitURL);
+		}
+#else
+		if (finalQuitURL != ""){
+			Application.OpenURL(finalQuitURL);
+		}
+		Application.Quit();
+#endif
     }
 
     public void StartLevel(GameObject callingButton)
