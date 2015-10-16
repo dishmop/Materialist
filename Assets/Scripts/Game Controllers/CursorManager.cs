@@ -7,9 +7,9 @@ public class CursorManager : MonoBehaviour
     static CursorManager instance;
 
     public Texture2D cursorNormal, cursorCanGrab, cursorHasGrabbed;
-    public Vector2 hotspotNormal = new Vector2(95, 38),
-        hotspotCanGrab = new Vector2(105, 80),
-        hotspotHasGrabbed = new Vector2(125, 100);
+	Vector2 hotspotNormal = new Vector2(23.75f, 9.5f);
+	Vector2 hotspotCanGrab = new Vector2(26.25f, 20f);
+	Vector2 hotspotHasGrabbed = new Vector2(31.25f, 25f);
     public bool canGrab = false, hasGrabbed = false;
 
     void Awake()
