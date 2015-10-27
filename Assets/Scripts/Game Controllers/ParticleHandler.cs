@@ -109,7 +109,7 @@ public class ParticleHandler : MonoBehaviour
         }
         if (canCool && Input.GetMouseButton(2))
         {
-            Debug.Log("Right clicked");
+ //           Debug.Log("Right clicked");
             ParticleController particleController;
             Collider2D[] colliders = Physics2D.OverlapCircleAll(mousePoint, selectionRadius * 2.0f);
             if (colliders != null)
@@ -134,7 +134,7 @@ public class ParticleHandler : MonoBehaviour
 
     public static void SetSelection(ParticleController particle)
     {
-        Debug.Log("Setting selection to " + particle.name);
+ //       Debug.Log("Setting selection to " + particle.name);
         ResetSelection();
         AddSelection(particle);
     }
@@ -167,7 +167,7 @@ public class ParticleHandler : MonoBehaviour
     }
     public static bool ToggleSelection(ParticleController particle)//Returns whether the particle is now in the selection
     {
-        Debug.Log("Toggling selection of " + particle.name);
+ //       Debug.Log("Toggling selection of " + particle.name);
         if (!RemoveSelection(particle))
         {
             AddSelection(particle);

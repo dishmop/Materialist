@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.Analytics;
 
 public class MenuController : MonoBehaviour
 {
@@ -40,7 +42,14 @@ public class MenuController : MonoBehaviour
             }
             else
             {
-                if (Application.loadedLevelName.Contains("Manip"))//Manipulation
+//				Debug.Log ("quitGame - levelName: " + Application.loadedLevelName);
+				Analytics.CustomEvent("quitGame", new Dictionary<string, object>
+				                      {
+					{ "levelName", Application.loadedLevelName},
+					{ "levelTime", Time.timeSinceLevelLoad},
+				});				
+				
+				if (Application.loadedLevelName.Contains("Manip"))//Manipulation
                 {
                     GoToManipulationSelectScreen();
                 }
@@ -62,6 +71,12 @@ public class MenuController : MonoBehaviour
 
     public static void LoadLevel(string levelName)
     {
+//		Debug.Log ("levelLoad - levelName: " + levelName);
+		Analytics.CustomEvent("levelLoad", new Dictionary<string, object>
+		{
+			{ "levelName", levelName},
+		});	
+		
         if (Application.CanStreamedLevelBeLoaded(levelName))
         {
             inMenu = (levelName.Contains("Screen"));
@@ -75,6 +90,7 @@ public class MenuController : MonoBehaviour
 
     public void GoToStartScreen()
     {
+
         LoadLevel(startScreenName);
     }
     public void GoToManipulationSelectScreen()
@@ -120,7 +136,16 @@ public class MenuController : MonoBehaviour
     public void StartLevel(GameObject callingButton)
     {
         string levelName = callingButton.GetComponentInChildren<Text>().text;
-        LoadLevel(levelName);
+//		Debug.Log ("startGame - levelName: " + levelName);
+		
+		Analytics.CustomEvent("startGame", new Dictionary<string, object>
+		{
+			{ "levelName", Application.loadedLevelName},
+		});		
+				
+		LoadLevel(levelName);
+		
+		
     }
     public void CopyWebsiteText()
     {

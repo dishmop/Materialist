@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityEngine.Analytics;
 
 public class LevelController : MonoBehaviour {
 
@@ -43,7 +44,15 @@ public class LevelController : MonoBehaviour {
 	
 	void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) Application.LoadLevel(Application.loadedLevelName);
+        if (Input.GetKeyDown(KeyCode.R)){
+//			Debug.Log ("restartLevel - levelName: " + Application.loadedLevelName + "levelTime: " + Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("restartLevel", new Dictionary<string, object>
+			{
+				{ "levelName", Application.loadedLevelName },
+				{ "levelTime", Time.timeSinceLevelLoad},
+			});			
+        	Application.LoadLevel(Application.loadedLevelName);
+        }
 
         if (!levelComplete)
         {
@@ -105,6 +114,14 @@ public class LevelController : MonoBehaviour {
     void GoToNextLevel()
     {
         string currentLevelName = Application.loadedLevelName;
+//        Debug.Log ("levelComplete - levelName: " + currentLevelName + ", levelTime: " + Time.timeSinceLevelLoad);
+		Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
+		{
+			{ "levelName", currentLevelName},
+			{ "levelTime", Time.timeSinceLevelLoad},
+		});	        
+        
+        
         int currentLevelNumber = 0;
         //Parse number from name after removing letters:
         int.TryParse(Regex.Replace(currentLevelName, "[^0-9]", ""), out currentLevelNumber);
