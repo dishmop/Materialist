@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using UnityEngine.Analytics;
+//using System.Collections.Generic;
+//using UnityEngine.Analytics;
 
 public class MenuController : MonoBehaviour
 {
