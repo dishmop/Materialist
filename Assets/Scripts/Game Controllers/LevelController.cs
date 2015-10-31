@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEngine.Analytics;
+//using UnityEngine.Analytics;
 
 public class LevelController : MonoBehaviour {
 
@@ -46,11 +46,13 @@ public class LevelController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.R)){
 //			Debug.Log ("restartLevel - levelName: " + Application.loadedLevelName + "levelTime: " + Time.timeSinceLevelLoad);
-			Analytics.CustomEvent("restartLevel", new Dictionary<string, object>
-			{
-				{ "levelName", Application.loadedLevelName },
-				{ "levelTime", Time.timeSinceLevelLoad},
-			});			
+			GoogleAnalytics.Client.SendTimedEventHit("gameFlow", "restartLevel", Application.loadedLevelName, Time.timeSinceLevelLoad);
+//
+//			Analytics.CustomEvent("restartLevel", new Dictionary<string, object>
+//			{
+//				{ "levelName", Application.loadedLevelName },
+//				{ "levelTime", Time.timeSinceLevelLoad},
+//			});			
         	Application.LoadLevel(Application.loadedLevelName);
         }
 
@@ -115,11 +117,14 @@ public class LevelController : MonoBehaviour {
     {
         string currentLevelName = Application.loadedLevelName;
 //        Debug.Log ("levelComplete - levelName: " + currentLevelName + ", levelTime: " + Time.timeSinceLevelLoad);
-		Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
-		{
-			{ "levelName", currentLevelName},
-			{ "levelTime", Time.timeSinceLevelLoad},
-		});	        
+		GoogleAnalytics.Client.SendTimedEventHit("gameFlow", "levelComplete", currentLevelName, Time.timeSinceLevelLoad);
+		GoogleAnalytics.Client.SendScreenHit("levelComplete_" + currentLevelName);		
+//		
+//		Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
+//		{
+//			{ "levelName", currentLevelName},
+//			{ "levelTime", Time.timeSinceLevelLoad},
+//		});	        
         
         
         int currentLevelNumber = 0;

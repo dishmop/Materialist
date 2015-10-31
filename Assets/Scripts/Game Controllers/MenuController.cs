@@ -43,11 +43,13 @@ public class MenuController : MonoBehaviour
             else
             {
 //				Debug.Log ("quitGame - levelName: " + Application.loadedLevelName);
-				Analytics.CustomEvent("quitGame", new Dictionary<string, object>
-				                      {
-					{ "levelName", Application.loadedLevelName},
-					{ "levelTime", Time.timeSinceLevelLoad},
-				});				
+				GoogleAnalytics.Client.SendTimedEventHit("gameFlow", "quitGame", Application.loadedLevelName, Time.timeSinceLevelLoad);
+				
+//				Analytics.CustomEvent("quitGame", new Dictionary<string, object>
+//				                      {
+//					{ "levelName", Application.loadedLevelName},
+//					{ "levelTime", Time.timeSinceLevelLoad},
+//				});				
 				
 				if (Application.loadedLevelName.Contains("Manip"))//Manipulation
                 {
@@ -72,10 +74,12 @@ public class MenuController : MonoBehaviour
     public static void LoadLevel(string levelName)
     {
 //		Debug.Log ("levelLoad - levelName: " + levelName);
-		Analytics.CustomEvent("levelLoad", new Dictionary<string, object>
-		{
-			{ "levelName", levelName},
-		});	
+		GoogleAnalytics.Client.SendEventHit("gameFlow", "levelLoad", levelName);
+//		
+//		Analytics.CustomEvent("levelLoad", new Dictionary<string, object>
+//		{
+//			{ "levelName", levelName},
+//		});	
 		
         if (Application.CanStreamedLevelBeLoaded(levelName))
         {
@@ -137,11 +141,12 @@ public class MenuController : MonoBehaviour
     {
         string levelName = callingButton.GetComponentInChildren<Text>().text;
 //		Debug.Log ("startGame - levelName: " + levelName);
+		GoogleAnalytics.Client.SendEventHit("gameFlow", "startGame", Application.loadedLevelName);
 		
-		Analytics.CustomEvent("startGame", new Dictionary<string, object>
-		{
-			{ "levelName", Application.loadedLevelName},
-		});		
+//		Analytics.CustomEvent("startGame", new Dictionary<string, object>
+//		{
+//			{ "levelName", Application.loadedLevelName},
+//		});		
 				
 		LoadLevel(levelName);
 		
